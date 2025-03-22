@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { HomeService } from './home.service'
 
 interface AuthorInfo{
   aName: string
@@ -15,13 +16,15 @@ export class HomePage {
   pageName = "Николай"
   books = ["Пушкин", "Лермонтов", "Толстой"]
   authors: AuthorInfo[] = [
-    {aName:"Пушкин", aBirth:1799},
-    {aName:"Лермонтов", aBirth:1814}
   ]
-  constructor() {}
 
-btnClick(){
-  this.pageName = this.pageName + "!"
-}
-
+  constructor(private data: HomeService) {}
+  btnClick(){
+    this.pageName = this.pageName + "!"
+  }
+  ngOnInit(){
+    this.data.getData().subscribe((responce: any) => {
+      this.books = responce
+    });
+  }
 }
